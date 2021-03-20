@@ -19,8 +19,6 @@
 35 6,22 * * * node /scripts/jd_global.js >> /scripts/logs/jd_global.log 2>&1
 #京东众筹许愿池
 10 10,15 13-20 3 * node /scripts/jd_wish.js >> /scripts/logs/jd_wish.log 2>&1
-#手机尚学季
-0 0,12 * * * node /scripts/jd_xtg.js >> /scripts/logs/jd_xtg.log 2>&1
 #母婴跳一跳
 10 3,15 17-24 3 * node /scripts/jd_jump_jump.js >> /scripts/logs/jd_jump_jump.log 2>&1
 #金口碑奖投票
@@ -29,6 +27,8 @@
 1 9,12,19 * * * node /scripts/jd_super5g.js >> /scripts/logs/jd_super5g.log 2>&1
 #jd_oneplus盲盒
 1 3,13 * * * node /scripts/jd_oneplus.js >> /scripts/logs/jd_oneplus.log 2>&1
+#jd_live_lottery_social
+1 1,12 * * * node /scripts/jd_live_lottery_social.js >> /scripts/logs/jd_live_lottery_social.log 2>&1
 
 ##############长期活动##############
 # 签到
