@@ -28,7 +28,7 @@
 #jd_oneplus盲盒
 1 3,13 * * * node /scripts/jd_oneplus.js >> /scripts/logs/jd_oneplus.log 2>&1
 #jd_live_lottery_social
-1 1,12 * * * node /scripts/jd_live_lottery_social.js >> /scripts/logs/jd_live_lottery_social.log 2>&1
+0 7-23/1 * * * node /scripts/jd_live_lottery_social.js >> /scripts/logs/jd_live_lottery_social.log 2>&1
 
 ##############长期活动##############
 # 签到
