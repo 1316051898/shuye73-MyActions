@@ -2,7 +2,7 @@
 5G超级盲盒，可抽奖获得京豆，建议在凌晨0点时运行脚本，白天抽奖基本没有京豆，4小时运行一次收集热力值
 活动地址: https://isp5g.m.jd.com
 活动时间：2021-03-19到2021-04-30
-更新时间：2021-03-19 18:35
+更新时间：2021-03-20 08:55
 脚本兼容: QuantumultX, Surge,Loon, JSBox, Node.js
 =================================Quantumultx=========================
 [task_local]
@@ -36,8 +36,8 @@ if ($.isNode()) {
 }
 
 const JD_API_HOST = 'https://isp5g.m.jd.com';
-//邀请码可能一天一变化，先测试
-$.shareId = ["cd353263-1701-417b-9ac3-088a8ee19085","eb7a7209-658e-4792-a040-9cc761b0a167"];
+//邀请码一天一变化，已确定
+$.shareId = [];
 !(async () => {
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
@@ -47,6 +47,7 @@ $.shareId = ["cd353263-1701-417b-9ac3-088a8ee19085","eb7a7209-658e-4792-a040-9cc
     $.msg($.name, '活动已结束', `请禁用或删除脚本`);
     return
   }
+  await updateShareCodesCDN()
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
@@ -86,6 +87,15 @@ $.shareId = ["cd353263-1701-417b-9ac3-088a8ee19085","eb7a7209-658e-4792-a040-9cc
     $.UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1]);
     console.log(`\n\n自己账号内部互助`);
     for (let item of $.shareId) {
+      console.log(`账号 ${$.index} ${$.UserName} 开始给 ${item}进行助力`)
+      const res = await addShare(item);
+      if (res && res['code'] === 2005) {
+        console.log(`次数已用完，跳出助力`)
+        break
+      }
+    }
+    console.log(`\n\n如果有剩余助力机会则随机互助`);
+    for (let item of $.body || []) {
       console.log(`账号 ${$.index} ${$.UserName} 开始给 ${item}进行助力`)
       const res = await addShare(item);
       if (res && res['code'] === 2005) {
@@ -472,6 +482,7 @@ function shareUrl() {
         if (data['code'] === 200) {
           $.shareId.push(data['data']);
           console.log(`\n【京东账号${$.index}（${$.nickName || $.UserName}）的${$.name}好友互助码】${data['data']}\n`);
+          console.log(`此邀请码一天一变化，旧的不可用`)
 
         }
       } catch (e) {
@@ -495,6 +506,32 @@ function taskurl(url) {
       "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0")
     }
   }
+}
+function updateShareCodesCDN(url = 'https://gitee.com/Soundantony/updateTeam/raw/master/shareCodes/jd_5g.json') {
+  return new Promise(resolve => {
+    $.get({
+      url ,
+      timeout: 10000,
+      headers:{"User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0")}}, async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          $.updatePkActivityIdRes = JSON.parse(data);
+          
+          if ($.updatePkActivityIdRes && $.updatePkActivityIdRes.length) {
+            $.shareId = $.updatePkActivityIdRes;
+            console.log($.shareId)
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
 }
 function TotalBean() {
   return new Promise(async resolve => {
