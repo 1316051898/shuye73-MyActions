@@ -18,6 +18,7 @@ let businessCircleJump = true;//小于对方300热力值自动更换商圈队伍
 let drawLotteryFlag = false;//是否用500蓝币去抽奖，true表示开启，false表示关闭。默认关闭
 let joinPkTeam = true;//是否自动加入PK队伍
 let message = '', subTitle;
+let helpAuthor = true;
 let t = +new Date()
 const JD_API_HOST = 'https://api.m.jd.com/api';
 
