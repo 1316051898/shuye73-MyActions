@@ -2,7 +2,8 @@
 50 23 */3 * * rm -rf /scripts/logs/*.log
 
 ##############短期活动##############
-
+#女装盲盒 活动时间：2021-03-22到2021-03-31
+35 1,23 * * * node /scripts/jd_nzmh.js >> /scripts/logs/jd_nzmh.log 2>&1
 # 小魔方
 10 8,21 1-8/1 3 * node /scripts/jd_xmf.js >> /scripts/logs/jd_xmf.log 2>&1
 # 京小兑
