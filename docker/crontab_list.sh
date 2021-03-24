@@ -11,13 +11,11 @@
 # 极速版春香节红包
 30 9 * * * node /scripts/jd_speed_redpocke.js >> /scripts/logs/jd_speed_redpocke.log 2>&1
 # 超级直播间红包雨
-30,31 20-23/1 19 3 * node /scripts/jd_live_redrain.js >> /scripts/logs/jd_live_redrain.log 2>&1
+30,31 20-23/1 23 3 * node /scripts/jd_live_redrain.js >> /scripts/logs/jd_live_redrain.log 2>&1
 #京东国际盲盒活动时间】2021年02月23日 起至 2021年03月31日 18:00:00
 5 7,12,23 * * * node /scripts/jd_global_mh.js >> /scripts/logs/jd_global_mh.log 2>&1
 #环球挑战赛 第二季(活动时间：2021-03-08 至 2021-03-31)
 35 6,22 * * * node /scripts/jd_global.js >> /scripts/logs/jd_global.log 2>&1
-#京东众筹许愿池
-10 10,15 13-20 3 * node /scripts/jd_wish.js >> /scripts/logs/jd_wish.log 2>&1
 #母婴跳一跳
 10 3,15 17-24 3 * node /scripts/jd_jump_jump.js >> /scripts/logs/jd_jump_jump.log 2>&1
 #金口碑奖投票
