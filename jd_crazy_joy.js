@@ -178,7 +178,7 @@ if ($.isNode()) {
   $.selfCodes = []
   for (let i = 0; i < cookiesArr.length; i++) {
     if (i%2===0) {
-      $.nextCode = ["EdLPh8A6X5G1iWXu-uPYfA==", "nCQQXQHKGjPCb7jkd8q2U-aCTjZMxL3s"];
+      $.nextCode = ["WYJ0yHMAY9EyV87yr81V6at9zd5YaBeE", "BB48h3AETPoBgT0f-in5WQ=="];
       $.nextCode = $.nextCode[randomNumber(0, $.nextCode.length)];
     }
     if (cookiesArr[i]) {

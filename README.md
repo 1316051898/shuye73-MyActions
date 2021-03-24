@@ -34,8 +34,8 @@ lxk0301-环境变量合集（Secrets）配置[点击查看](secrets.md)
 
 > 具体如何取 cookie 如何配置,可参考 [lxk0301 的获取京东Cookies教程](backup/GetJdCookie.md)
 
-### 二丶Docker目前采用那位大佬的新版控制面板，如若出现问题，建议重新删除容器和镜像重新部署保持目录一致配置文件无须变更，之后手动对比更新一下就行了[Docker2 V3 gitee库使用教程](backup/docker/Docker2.md)
+### 二丶Docker2 V3 gitee库使用教程[点此查看](backup/docker/Docker2.md)
 
 ### [如果你感觉上面的学不会，那么点这里可以走捷径](backup/docker/Docker2.1.md)
 
-### 三丶仓库fork数量上涨，建议加入[电报通知频道](https://t.me/joinchat/Uf-EARsmoLq4Lym3)或者收藏[Gitee库地址](https://gitee.com/shuye72/projects)，如若被删则第一时间能够收到最新消息。
+### 三丶仓库fork数量上涨，建议加入电报通知频道[点此加入](https://t.me/joinchat/Uf-EARsmoLq4Lym3)或者收藏Gitee库地址[点此收藏](https://gitee.com/shuye72/projects)，如若被删则第一时间能够收到最新消息。
