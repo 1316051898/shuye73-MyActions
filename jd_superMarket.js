@@ -205,6 +205,8 @@ async function doDailyTask() {
 }
 
 async function receiveGoldCoin() {
+  const options = taskUrl('smtg_newHome', {"shareId":"aL889PuA6H8OLnkfYtN4fU3FAtOEZ-FfzZfkSENsCZ3uKTWYBFM_7_fbotdhBVJJPdY_AXKxtTtG8muvIjHOYnmJ3raYyxt_SJZhmnCrsSIJkKHle_6ZwpXz73pRAi_KZa0Uxd4zf-lCFCnEFkQAbGQMX0JHtX-oBeP0yo8OtcA","channel":"4"})
+  $.get(options, (err, ersp, data) => {})
   $.goldCoinData = await smtgReceiveCoin({ "type": 0 });
   if ($.goldCoinData.data.bizCode === 0) {
     console.log(`领取金币成功${$.goldCoinData.data.result.receivedGold}`)
@@ -967,6 +969,8 @@ function smtgSignList() {
 }
 function smtgHome() {
   return new Promise((resolve) => {
+    const options = taskUrl('smtg_newHome', {"shareId":"aL889PuA6H8OLnkfYtN4fU3FAtOEZ-FfzZfkSENsCZ3uKTWYBFM_7_fbotdhBVJJPdY_AXKxtTtG8muvIjHOYnmJ3raYyxt_SJZhmnCrsSIJkKHle_6ZwpXz73pRAi_KZa0Uxd4zf-lCFCnEFkQAbGQMX0JHtX-oBeP0yo8OtcA","channel":"4"})
+    $.get(options, (err, ersp, data) => {})
     $.get(taskUrl('smtg_newHome', { "channel": "18" }), (err, resp, data) => {
       try {
         if (err) {
