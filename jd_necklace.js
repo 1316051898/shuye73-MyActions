@@ -137,10 +137,9 @@ async function sign() {
 }
 async function reportTask(item = {}) {
   //普通任务
-  if (item['taskType'] !== 3 && item['taskType'] !== 4 && item['taskType'] !== 6) {
-    await necklace_startTask(item.id, 'necklace_reportTask');
-  }
-  if (item['taskType'] === 6) {
+  if (item['taskType'] === 2) await necklace_startTask(item.id, 'necklace_reportTask');
+  //逛很多商品店铺等等任务
+  if (item['taskType'] === 6 || item['taskType'] === 8 || item['taskType'] === 5 || item['taskType'] === 9) {
     //浏览精选活动任务
     await necklace_getTask(item.id);
     $.taskItems = $.taskItems.filter(value => !!value && value['status'] === 0);
