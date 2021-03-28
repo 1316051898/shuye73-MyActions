@@ -118,6 +118,9 @@
 5 5 */2 * *  node /scripts/jd_crazy_joy_coin.js >> /scripts/logs/jd_crazy_joy_coin.log 2>&1
 # 京东摇一摇
 0 1,17 * * *   node /scripts/jd_shake.js >> /scripts/logs/jd_shake.log 2>&1
+# 店铺签到
+0 1,17 * * *   node /scripts/jd_ShopSign.js >> /scripts/logs/jd_ShopSign.log 2>&1
+
 
 ##############默认注释活动##############
 # 京东试用（默认注释，请配合取关脚本使用）
@@ -126,3 +129,7 @@
 #20 9 * * 6 node /scripts/jd_delCoupon.js >> /scripts/logs/jd_delCoupon.log 2>&1
 # 京东家庭号(暂不知最佳cron)
 # */20 * * * * node /scripts/jd_family.js >> /scripts/logs/jd_family.log 2>&1
+# 监控crazyJoy分红
+# 10 7 * * * node /scripts/jd_crazy_joy_bonus.js >> /scripts/logs/jd_crazy_joy_bonus.log 2>&1
+# jd_cash_exchange
+# 0,1,2 0 * * * node /scripts/jd_cash_exchange.js >> /scripts/logs/jd_cash_exchange.log 2>&1
