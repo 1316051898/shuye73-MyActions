@@ -24,12 +24,7 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
 //助力好友分享码
 //此此内容是IOS用户下载脚本到本地使用，填写互助码的地方，同一京东账号的好友互助码请使用@符号隔开。
 //下面给出两个账号的填写示例（iOS只支持2个京东账号）
-let shareCodes = [ // IOS本地脚本用户这个列表填入你要助力的好友的shareCode
-  //账号一的好友shareCode,不同好友的shareCode中间用@符号隔开
-  '',
-  //账号二的好友shareCode,不同好友的shareCode中间用@符号隔开
-  '',
-]
+let shareCodes = []
 
 !(async () => {
   await requireConfig();
@@ -39,7 +34,7 @@ let shareCodes = [ // IOS本地脚本用户这个列表填入你要助力的好�
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
-      $.UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1])
+      $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
       $.index = i + 1;
       $.coincount = 0;//收取了多少个蓝币
       $.coinerr = "";
@@ -326,7 +321,8 @@ async function businessCircleActivity() {
           Teams = $.updatePkActivityIdRes['Teams'] || Teams;
           if ($.getTeams && $.getTeams.length) {
             Teams = [...Teams, ...$.getTeams.filter(item => item['pkActivityId'] === `${pkActivityId}`)];
-          }          const randomNum = randomNumber(0, Teams.length);
+          }
+          const randomNum = randomNumber(0, Teams.length);
 
           const res = await smtg_joinPkTeam(Teams[randomNum] && Teams[randomNum].teamId, Teams[randomNum] && Teams[randomNum].inviteCode, pkActivityId);
           if (res && res.data.bizCode === 0) {
@@ -716,7 +712,7 @@ async function receiveUserUpgradeBlue() {
   const res = await smtgReceiveCoin({"type": 4, "channel": "18"})
   // $.log(`${JSON.stringify(res)}\n`)
   if (res && res.data['bizCode'] === 0) {
-    console.log(`\n收取营业额：获得 ${res.data.result['receivedTurnover']}蓝币\n`);
+    console.log(`\n收取营业额：获得 ${res.data.result['receivedTurnover']}\n`);
   }
 }
 async function Home() {
@@ -1057,6 +1053,7 @@ function smtgDoAssistPkTask(code) {
   })
 }
 function smtgReceiveCoin(body) {
+  $.goldCoinData = {};
   return new Promise((resolve) => {
     $.get(taskUrl('smtg_receiveCoin', body), (err, resp, data) => {
       try {
@@ -1530,7 +1527,7 @@ function TotalBean() {
         "Connection": "keep-alive",
         "Cookie": cookie,
         "Referer": "https://wqs.jd.com/my/jingdou/my.shtml?sceneval=2",
-        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0")
+        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1")
       }
     }
     $.post(options, (err, resp, data) => {
@@ -1546,7 +1543,7 @@ function TotalBean() {
               return
             }
             if (data['retcode'] === 0) {
-              $.nickName = data['base'].nickname;
+              $.nickName = (data['base'] && data['base'].nickname) || $.UserName;
             } else {
               $.nickName = $.UserName
             }
@@ -1592,7 +1589,7 @@ function taskUrl(function_id, body = {}) {
   return {
     url: `${JD_API_HOST}?functionId=${function_id}&appid=jdsupermarket&clientVersion=8.0.0&client=m&body=${escape(JSON.stringify(body))}&t=${Date.now()}`,
     headers: {
-      'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
+      'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
       'Host': 'api.m.jd.com',
       'Cookie': cookie,
       'Referer': 'https://jdsupermarket.jd.com/game',
