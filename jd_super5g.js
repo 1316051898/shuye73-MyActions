@@ -25,7 +25,7 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭通知推送
 //IOS等用户直接用NobyDa的jd cookie
-let cookiesArr = [], cookie = '', message;
+let cookiesArr = [], cookie = '', message, allMessage = '';
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item])
@@ -76,9 +76,9 @@ $.shareId = [];
       await getAward();//抽奖
     }
   }
-  //ios端22点通知一次
-  if (new Date().getHours() === 22) {
-    $.msg($.name, '', `任务已做完\n抽奖详情查看 https://isp5g.m.jd.com`, {"open-url": "https://isp5g.m.jd.com"});
+  if (allMessage) {
+    if ($.isNode()) await notify.sendNotify($.name, allMessage);
+    $.msg($.name, '', allMessage, {"open-url": "https://isp5g.m.jd.com"})
   }
   for (let v = 0; v < cookiesArr.length; v++) {
     cookie = cookiesArr[v];
@@ -248,6 +248,8 @@ function getCoin() {
         }
       } catch (e) {
         $.logErr(e, resp);
+      } finally {
+        resolve();
       }
     })
   })
@@ -399,11 +401,15 @@ async function getAward() {
           console.log(`====抽奖结果====,${JSON.stringify(lotteryRes.data)}`);
           console.log(lotteryRes.data.name);
           console.log(lotteryRes.data.beanNum);
+          if ((lotteryRes.data['prizeId'] && lotteryRes.data['prizeId'] !== '9999') || lotteryRes.data.name === '未中奖') {
+            message += `抽奖获得：${lotteryRes.data.name}\n`;
+          }
         } else if (lotteryRes.code === 4001) {
           console.log(`抽奖失败,${lotteryRes.msg}`);
           break;
         }
       }
+      if (message) allMessage += `京东账号${$.index} ${$.nickName}\n${message}抽奖详情查看 https://isp5g.m.jd.com/#/myPrize${$.index !== cookiesArr.length ? '\n\n' : ''}`
     } else {
       console.log(`目前热力值${total},不够抽奖`)
     }
