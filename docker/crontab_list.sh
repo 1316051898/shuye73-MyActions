@@ -22,6 +22,8 @@
 0 0-18/6 * * * node /scripts/jd_carnivalcity.js >> /scripts/logs/jd_carnivalcity.log 2>&1
 #jd_shoplottery
 10 15 * * * node /scripts/jd_shoplottery.js >> /scripts/logs/jd_shoplottery.log 2>&1
+#jd_jump_jump
+10 20 * * * node /scripts/jd_jump_jump.js >> /scripts/logs/jd_jump_jump.log 2>&1
 
 ##############长期活动##############
 # 签到
